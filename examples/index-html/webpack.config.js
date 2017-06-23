@@ -1,13 +1,14 @@
 const path = require("path");
-const indexHtml = path.join(__dirname, "app", "index.html");
-
+const indexFtl = path.join(__dirname, "app", "index.ftl");
+const extractFtl = require('../../index').extract;
 const fileLoader = {
 		loader: "file-loader"
 };
-
+console.log(indexFtl);
 module.exports = {
-		entry: [// path.join(__dirname, "app", "main.js"),
-				indexHtml],
+		entry: [
+				//  path.join(__dirname, "app", "main.js"),
+				indexFtl],
 		output: {
 				path: path.join(__dirname, "dist"),
 				filename: "bundle.js"
@@ -15,7 +16,7 @@ module.exports = {
 		module: {
 				rules: [
 						{
-								test: indexHtml,
+								test: indexFtl,
 								use: [
 										{
 												loader: "file-loader",
@@ -24,12 +25,10 @@ module.exports = {
 												}
 										}, {
 												loader: "extract-loader"
-										}, {
-												loader: "html-loader",
-												options: {
-														attrs: ["img:src", "link:href"]
-												}
-										}
+										},
+										extractFtl({
+											attrs: ["img:src", "link:href"]
+										})
 								]
 						}, {
 								test: /\.css$/,

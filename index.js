@@ -10,7 +10,6 @@
  * 
  */
 const plugin = require('./lib/plugin');
-const extract = require('./lib/extract');
 
 function ExtractFtlPlugin () {
 
@@ -22,5 +21,9 @@ ExtractFtlPlugin.apply = function () {
 
 // loader入口
 ExtractFtlPlugin.extract = function (options) {
-
+	return {
+		loader: require.resolve('./lib/loader'), 
+		options: options
+	}
 }
+module.exports = exports = ExtractFtlPlugin;
