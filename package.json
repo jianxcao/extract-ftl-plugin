@@ -1,0 +1,40 @@
+{
+  "name": "extract-ftl-plugin",
+  "version": "0.0.1",
+  "description": "webpack ftl plugin",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jianxcao/extract-ftl-plugin.git"
+  },
+  "keywords": [
+    "webpack",
+    "ftl",
+    "plugin"
+  ],
+  "author": "jianxcao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jianxcao/extract-ftl-plugin/issues"
+  },
+  "homepage": "https://github.com/jianxcao/extract-ftl-plugin#readme",
+  "dependencies": {
+    "es6-templates": "^0.2.3",
+    "html-loader": "^0.4.5",
+    "html-minifier": "^3.5.2",
+    "loader-utils": "^1.1.0",
+    "webpack": "^3.0.0"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.4",
+    "extract-loader": "^0.1.0",
+    "file-loader": "^0.11.2"
+  }
+}
