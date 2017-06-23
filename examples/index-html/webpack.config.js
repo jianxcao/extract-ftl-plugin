@@ -16,7 +16,7 @@ module.exports = {
 		module: {
 				rules: [
 						{
-								test: indexFtl,
+								test: /\.ftl$/,
 								use: [
 										{
 												loader: "file-loader",
@@ -27,7 +27,7 @@ module.exports = {
 												loader: "extract-loader"
 										},
 										extractFtl({
-											attrs: ["img:src", "link:href"]
+											attrs: ["img:src", "link:href", "include", 'import']
 										})
 								]
 						}, {
@@ -35,7 +35,10 @@ module.exports = {
 								loader: ["file-loader", "extract-loader", "css-loader"]
 						}, {
 								test: /\.jpg$/,
-								loader: "file-loader"
+								loader: "file-loader",
+								options: {
+										name: '[name].[hash].[ext]'
+								}
 						}
 				]
 		}
