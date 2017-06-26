@@ -95,7 +95,7 @@ module.exports = {
 设置后凡是url中带有  {{}}和 ${}的一律忽略不去编译
 
 ####  `selfRule` 自定义匹配规则
-
+> 待开发
 
 ## 其他
 请看[examples](./examples)目录中得demo
