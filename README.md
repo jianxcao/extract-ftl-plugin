@@ -5,3 +5,11 @@
 3. ftl源路径导出
 4. img link script等文件路径补全类似于  html-loader插件
 5. 使用方法请看examples
+
+
+## options
+attrs
+
+root
+
+ftlRoot

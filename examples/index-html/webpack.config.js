@@ -11,7 +11,12 @@ module.exports = {
 				indexFtl],
 		output: {
 				path: path.join(__dirname, "dist"),
+				publicPath: "http://pimg1.126.net/",
 				filename: "bundle.js"
+		},
+		context: path.join(__dirname, "app"),
+		resolve: {
+			modules: ["common", "node_modules"]
 		},
 		module: {
 				rules: [
@@ -21,23 +26,35 @@ module.exports = {
 										{
 												loader: "file-loader",
 												options: {
-														name: '[name].[ext]'
+														publicPath: "",
+														name: '[path][name].[ext]'
 												}
 										}, {
 												loader: "extract-loader"
 										},
 										extractFtl({
+											root: 'test',
 											attrs: ["img:src", "link:href", "include", 'import']
 										})
 								]
 						}, {
 								test: /\.css$/,
-								loader: ["file-loader", "extract-loader", "css-loader"]
+								use: [{
+										loader: "file-loader",
+										options: {
+											name: '[path][name].[hash].[ext]'
+										}
+									},{
+										loader: "extract-loader",
+									},{
+										loader:  "css-loader"
+									}
+								]
 						}, {
 								test: /\.jpg$/,
 								loader: "file-loader",
 								options: {
-										name: '[name].[hash].[ext]'
+										name: '[path][name].[hash].[ext]'
 								}
 						}
 				]
