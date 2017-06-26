@@ -3,7 +3,7 @@
 1. include和import路径补全 (<#--注释中将被忽略-->)
 2. ftl源路径导出
 3. img link script等文件路径补全类似于  html-loader插件
-4. 用指定正则方法获取url，并加入监控补全url (未实现)
+4. 用自定义的规则，补全url (未实现)
 
 ## loader使用
 
