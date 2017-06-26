@@ -43,7 +43,6 @@ module.exports = {
 												attrs: ["img:src", "link:href", "include", 'import'],
 												// 自定义规则，可以根据项目需要替换项目中的某些url
 												selfRule: [
-
 												]
 										})
 								]
@@ -77,7 +76,7 @@ module.exports = {
 #### `attrs` 
 `array|string`
 
-编译ftl中哪些地方的url，比如img的src属性 link的href属性
+编译ftl中的url，比如img的src属性 link的href属性
 
 如： `["img:src", "img:data-src", "link:href", "include", 'import']` 
 
