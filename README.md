@@ -40,10 +40,7 @@ module.exports = {
 												root: 'myroot',
 												// 忽略所有的带 ${} 和 {{}}的不去编译
 												ignoreCustomFragments: [/\{\{.*}}/, /\$\{.*\}/],
-												attrs: ["img:src", "link:href", "include", 'import'],
-												// 自定义规则，可以根据项目需要替换项目中的某些url
-												selfRule: [
-												]
+												attrs: ["img:src", "link:href", "include", 'import']
 										})
 								]
 						}, {
@@ -69,7 +66,8 @@ module.exports = {
 						}
 				]
 		}
-};					
+};
+			
 ```
 ### loader options
 
