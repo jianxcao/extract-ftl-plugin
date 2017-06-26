@@ -4,8 +4,24 @@ const extractFtl = require('../../index').extract;
 const fileLoader = {
 		loader: "file-loader"
 };
+const selfRule = function (context) {
+	let reg = /<#assign\s+loading1*\s*=\s*\[(.*)\]\s*/g;
+	let nn = /["']([^'"]+)["']/g;
+	let dou = /^["']|["']$/g;
+	let res = null;
+	let result = [];
+	while(res = reg.exec(context)) {
+		while(r = nn.exec(res[0])) {
+			result.push({
+				start: r.index + res.index + 1,
+				value: r[1]
+			});		
+		}
+	}
+	return result;
+}
 module.exports = {
-		entry: [//  path.join(__dirname, "app", "main.js"),
+		entry: [ path.join(__dirname, "app", "/js/main.js"),
 				indexFtl],
 		output: {
 				path: path.join(__dirname, "dist"),
@@ -34,7 +50,8 @@ module.exports = {
 												root: 'myroot',
 												// 忽略所有的带 ${} 和 {{}}的不去编译
 												ignoreCustomFragments: [/\{\{.*}}/, /\$\{.*\}/],
-												attrs: ["img:src", "link:href", "include", 'import']
+												attrs: ["img:src", "link:href", "include", 'import'],
+												selfRule: selfRule
 										})
 								]
 						}, {

@@ -89,7 +89,18 @@ module.exports = {
 设置后凡是url中带有  {{}}和 ${}的一律忽略不去编译
 
 ####  `selfRule` 自定义匹配规则
-> 待开发
-
+`function` 要求function返回指定格式, function参数content
+返回格式
+``` javascript
+	[{
+		// 要替换的位置
+		start: 3,
+		// 要替换的值
+		value: "/test"
+	},{
+		start: 3,
+		value: "/test"
+	}]
+```
 ## 其他
 请看[examples](./examples)目录中得demo
