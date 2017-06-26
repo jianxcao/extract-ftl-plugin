@@ -1,11 +1,9 @@
 #  ftl扩展插件
  ## 功能
 1. include和import路径补全 (<#--注释中将被忽略-->)
-2. 用指定正则方法获取url，并加入监控补全url
-3. ftl源路径导出
-4. img link script等文件路径补全类似于  html-loader插件
-5. 使用方法请看examples
-
+2. ftl源路径导出
+3. img link script等文件路径补全类似于  html-loader插件
+4. 用指定正则方法获取url，并加入监控补全url (未实现)
 
 ## loader使用
 
