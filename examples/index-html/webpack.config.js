@@ -4,10 +4,8 @@ const extractFtl = require('../../index').extract;
 const fileLoader = {
 		loader: "file-loader"
 };
-console.log(indexFtl);
 module.exports = {
-		entry: [
-				//  path.join(__dirname, "app", "main.js"),
+		entry: [//  path.join(__dirname, "app", "main.js"),
 				indexFtl],
 		output: {
 				path: path.join(__dirname, "dist"),
@@ -16,7 +14,7 @@ module.exports = {
 		},
 		context: path.join(__dirname, "app"),
 		resolve: {
-			modules: ["common", "node_modules"]
+				modules: ["common", "node_modules"]
 		},
 		module: {
 				rules: [
@@ -33,22 +31,25 @@ module.exports = {
 												loader: "extract-loader"
 										},
 										extractFtl({
-											root: 'test',
-											attrs: ["img:src", "link:href", "include", 'import']
+												root: 'myroot',
+												// 忽略所有的带 ${} 和 {{}}的不去编译
+												ignoreCustomFragments: [/\{\{.*}}/, /\$\{.*\}/],
+												attrs: ["img:src", "link:href", "include", 'import']
 										})
 								]
 						}, {
 								test: /\.css$/,
-								use: [{
-										loader: "file-loader",
-										options: {
-											name: '[path][name].[hash].[ext]'
+								use: [
+										{
+												loader: "file-loader",
+												options: {
+														name: '[path][name].[hash].[ext]'
+												}
+										}, {
+												loader: "extract-loader"
+										}, {
+												loader: "css-loader"
 										}
-									},{
-										loader: "extract-loader",
-									},{
-										loader:  "css-loader"
-									}
 								]
 						}, {
 								test: /\.jpg$/,
