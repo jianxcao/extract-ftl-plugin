@@ -62,6 +62,12 @@ module.exports = {
 													// test只能是正则，或者数组，或者string
 													test: /\.css$/,
 													loader: "!file-loader?name=[path][name].[hash].[ext]!css-loader"
+												},{
+													test: /core\.less$/,
+													loader: "!raw-loader?name=[path][name].[hash].css!less-loader"
+												},{
+													test: /\.less$/,
+													loader: "!file-loader?name=[path][name].[hash].css!less-loader"
 												}]
 										})
 								]
@@ -70,6 +76,15 @@ module.exports = {
 								use: [{
 												loader: "css-loader"
 										}]
+						},{
+							test: /\.less$/,
+							use: [{
+									loader: "style-loader"
+							},{
+									loader: "css-loader"
+							},{
+								loader: 'less-loader'
+							}]
 						}, {
 								test: /\.jpg$/,
 								loader: "file-loader",
@@ -81,7 +96,6 @@ module.exports = {
 		},
 		plugins: [
 			new ExtractFtlPlugin({
-				name: '[name].[ext]'
 			}),
 			new webpack.optimize.CommonsChunkPlugin({
 				names: ['vendor', 'manifest']
