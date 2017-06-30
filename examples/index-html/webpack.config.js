@@ -96,6 +96,7 @@ module.exports = {
 		},
 		plugins: [
 			new ExtractFtlPlugin({
+
 			}),
 			new webpack.optimize.CommonsChunkPlugin({
 				names: ['vendor', 'manifest']
