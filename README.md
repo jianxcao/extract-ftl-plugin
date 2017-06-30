@@ -111,5 +111,17 @@ module.exports = {
 		value: "/test"
 	}]
 ```
+#### `rules` 用指定规则替换
+``` javascript
+	//用指定 loader加载资源- 如果资源已经有loader则会放弃公共的loader
+	rules: [{
+		// test只能是正则，或者数组，或者string
+		test: /\.css$/,
+		loader: "!file-loader?name=[path][name].[hash].[ext]!css-loader"
+	}]
+```
+
+通过指定规则可以覆盖默认的loader, 如果在页面中直接用 ${require(!file-loader!test.js)}，则会覆盖这里的loader
+
 ## 其他
 请看[examples](./examples)目录中得demo
