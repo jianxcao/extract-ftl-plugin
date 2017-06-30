@@ -1,6 +1,6 @@
 #  ftl扩展插件
  ## 功能
-1. include和import路径补全 (<#--注释中将被忽略-->)
+1. include和import路径补全 (<#--注释中将被忽略--> (${reqire('module')})在开启interpolate时无法忽略)
 2. ftl源路径导出
 3. img link script等文件路径补全类似于  html-loader插件
 4. 用自定义的规则，补全url (未实现)
@@ -85,10 +85,19 @@ module.exports = {
 根路径设置，如果设置是string则会在`/`开头得路径前添加root路径，如果root设置成true，则认为路径是绝对路径,**特别注意，只有路径是以/开头的时候才生效**
 
 #### `ignoreCustomFragments`
-`array` 如： [/\{\{.*}}/, /\$\{.*\}/]
+`array` 如： [/\{\{.*}}/, /\$\{.*\}/] (${reqire('module')})在开启interpolate时无法忽略
 设置后凡是url中带有  {{}}和 ${}的一律忽略不去编译
 
-####  `selfRule` 自定义匹配规则
+#### interpolate
+`require|boolean` 参数值可以  require或者 true|false
+
+参数默认为false
+
+参数为require时, 在页面中插入 ${require('file-loader!css-loader!main.css')};表示用file-loader!css-loader加载这个资源,可以在任意位置插入
+
+参数为true时会将整个文件当做es6模板编译
+
+####  `replace` 自定义匹配规则
 `function` 要求function返回指定格式, function参数content
 返回格式
 ``` javascript

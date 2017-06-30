@@ -1,2 +1,1 @@
-
-<img src="./img/hi.jpg" alt="">
+<div>test</div>

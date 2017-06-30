@@ -1,10 +1,11 @@
 const path = require("path");
-const indexFtl = path.join(__dirname, "app", "index.ftl");
 const extractFtl = require('../../index').extract;
+const ExtractFtlPlugin = require('../../index');
+const webpack = require('webpack');
 const fileLoader = {
 		loader: "file-loader"
 };
-const selfRule = function (context) {
+const replace = function (context) {
 	let reg = /<#assign\s+loading1*\s*=\s*\[(.*)\]\s*/g;
 	let nn = /["']([^'"]+)["']/g;
 	let dou = /^["']|["']$/g;
@@ -21,12 +22,15 @@ const selfRule = function (context) {
 	return result;
 }
 module.exports = {
-		entry: [ path.join(__dirname, "app", "/js/main.js"),
-				indexFtl],
+		entry: {
+			"js/index": "./js/index.js",
+			// ftl最好带上后缀防止与js文件同名-- 模板入口只能是单文件入口
+			"index.ftl": "./index.ftl"
+		},
 		output: {
 				path: path.join(__dirname, "dist"),
 				publicPath: "http://pimg1.126.net/",
-				filename: "bundle.js"
+				filename: "[name].[chunkhash:10].js"
 		},
 		context: path.join(__dirname, "app"),
 		resolve: {
@@ -40,34 +44,32 @@ module.exports = {
 										{
 												loader: "file-loader",
 												options: {
-														publicPath: "",
+														publicPath: "/",
 														name: '[path][name].[ext]'
 												}
-										}, {
-												loader: "extract-loader"
 										},
-										extractFtl({
-												root: 'myroot',
+										extractFtl({ // 将ftl编译成一个 js module
+												// root: 'myroot',
+												// publicPath: null,
 												// 忽略所有的带 ${} 和 {{}}的不去编译
 												ignoreCustomFragments: [/\{\{.*}}/, /\$\{.*\}/],
+												interpolate: 'require',
 												attrs: ["img:src", "link:href", "include", 'import'],
-												selfRule: selfRule
+												// 通过replace函数替换 require
+												replace: replace,
+												//用指定 loader加载资源- 如果资源已经有loader则会放弃公共的loader
+												rules: [{
+													// test只能是正则，或者数组，或者string
+													test: /\.css$/,
+													loader: "!file-loader?name=[path][name].[hash].[ext]!css-loader"
+												}]
 										})
 								]
 						}, {
 								test: /\.css$/,
-								use: [
-										{
-												loader: "file-loader",
-												options: {
-														name: '[path][name].[hash].[ext]'
-												}
-										}, {
-												loader: "extract-loader"
-										}, {
+								use: [{
 												loader: "css-loader"
-										}
-								]
+										}]
 						}, {
 								test: /\.jpg$/,
 								loader: "file-loader",
@@ -76,5 +78,13 @@ module.exports = {
 								}
 						}
 				]
-		}
+		},
+		plugins: [
+			new ExtractFtlPlugin({
+				name: '[name].[ext]'
+			}),
+			new webpack.optimize.CommonsChunkPlugin({
+				names: ['vendor', 'manifest']
+			})
+		]
 };

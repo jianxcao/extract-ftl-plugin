@@ -10,12 +10,50 @@
  * 
  */
 const plugin = require('./lib/plugin');
-
-function ExtractFtlPlugin () {
-
+const ftl = /\.ftl$/;
+const path = require('path');
+function ExtractFtlPlugin (options) {
+	this.options = Object.assign(options, {
+		showErrors: true
+	});
 }
 // plugin入口
-ExtractFtlPlugin.apply = function () {
+ExtractFtlPlugin.prototype.apply = function (compiler) {
+	// 编译已经完成，提取所有得ftl文件
+	compiler.plugin('compilation', function (compilation) {
+		let files = compilation.files;
+			compilation.plugin('additional-assets', function(callback) {
+				// 取到所有得入口点过滤
+				let entries = this.entries;
+				// 文件生成入口
+				let assets = this.assets;
+				let chunks = this.chunks;
+				// 循环所有得chunk, 找到入口的ftl文件
+				chunks.map(chunk => {
+					// 找到入口模块
+					let entryModule = chunk.entryModule;
+					if (!entryModule) {
+						return;
+					}
+					let entryRequest = entryModule.rawRequest;
+					if (!entryRequest) {
+						return;
+					}
+					// 如果是ftl文件为入口
+					if (ftl.test(entryRequest)) {
+						let files = chunk.files;
+						files.forEach(file => {
+							// ftl的生成文件
+							if (assets[file]) {
+								// 取当前ftl模块的内容
+								console.log('bbbb');
+							}
+						});
+					}
+				});
+				 callback();
+			});	
+	});
 
 }
 
